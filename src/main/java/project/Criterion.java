@@ -10,9 +10,19 @@ public class Criterion {
     String criterionName;
     SimpleMatrix matrix;
 
-    public Criterion(String name, SimpleMatrix matrix){
+    public Criterion(String name){
         this.criterionName = name;
-        this.matrix = matrix;
+    }
+
+    public void createMatrix(int size){
+        matrix = new SimpleMatrix(size, size);
+        for (int i = 0; i<size; i++)
+            matrix.set(i, i, 1);
+    }
+
+    public void setComparison(int i, int j, double val){
+        matrix.set(i, j, val);
+        matrix.set(j, i, 1.0/val);
     }
 
     public SimpleMatrix weightVector(){
@@ -32,4 +42,6 @@ public class Criterion {
 
         return eigenVector;
     }
+
+    public String getCriterionName() {return criterionName;}
 }
