@@ -135,8 +135,15 @@ public class Controller {
         calc.setCriterionWeightVectors(criterionWeights.weightVector());
 
         Label vector = new Label();
-        vector.setText(calc.calculate().toString());
+        vector.setText("Weight vector: "+calc.calculate().toString());
+
+        Label[] inconsistencyLabels = new Label[criterions.length];
+        for (int i=0; i<criterions.length; i++)
+            inconsistencyLabels[i] = new Label("Criterion "+i+" inconsistency: "+criterions[i].inconsistencyIndex());
+
         mainBox.getChildren().addAll(vector);
+        for (Label label: inconsistencyLabels)
+            mainBox.getChildren().add(label);
     }
 
     public VBox getMainBox(){ return mainBox; }

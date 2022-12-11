@@ -43,5 +43,20 @@ public class Criterion {
         return eigenVector;
     }
 
+    public double inconsistencyIndex(){
+        double maxIndex=0;
+        double currIndex;
+        for (int i =0; i<matrix.numRows(); i++){
+            for (int j =i+1; j<matrix.numRows(); j++){
+                for (int k =j+1; k<matrix.numRows(); k++){
+                    currIndex = Math.min(Math.abs(1-((matrix.get(i,k)*matrix.get(k,j))/matrix.get(i,j))),
+                            Math.abs(1-(matrix.get(i,j)/(matrix.get(i,k)*matrix.get(k,j)))));
+                    maxIndex = Math.max(maxIndex, currIndex);
+                }
+            }
+        }
+        return maxIndex;
+    }
+
     public String getCriterionName() {return criterionName;}
 }
