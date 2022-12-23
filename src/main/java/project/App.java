@@ -17,6 +17,7 @@ public class App extends Application{
         VBox mainBox=new VBox(controller.getMainBox());
         Scene scene = new Scene(mainBox,sceneWidth,sceneHeight);
         primaryStage.setScene(scene);
+
         primaryStage.show();
 
         controller.start();

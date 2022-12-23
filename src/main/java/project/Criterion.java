@@ -1,7 +1,6 @@
 package project;
 
 import org.ejml.data.DMatrixRMaj;
-import org.ejml.data.Matrix;
 import org.ejml.dense.row.NormOps_DDRM;
 import org.ejml.simple.SimpleEVD;
 import org.ejml.simple.SimpleMatrix;
@@ -26,6 +25,8 @@ public class Criterion {
     }
 
     public SimpleMatrix weightVector(){
+        System.out.println(matrix.toString());
+
         SimpleEVD<SimpleMatrix> evdCalculator = new SimpleEVD<>(matrix.getMatrix());
 
         SimpleMatrix eigenVector = evdCalculator.getEigenVector(evdCalculator.getIndexMax());
