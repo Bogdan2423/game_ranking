@@ -25,8 +25,6 @@ public class Criterion {
     }
 
     public SimpleMatrix weightVector(){
-        System.out.println(matrix.toString());
-
         SimpleEVD<SimpleMatrix> evdCalculator = new SimpleEVD<>(matrix.getMatrix());
 
         SimpleMatrix eigenVector = evdCalculator.getEigenVector(evdCalculator.getIndexMax());

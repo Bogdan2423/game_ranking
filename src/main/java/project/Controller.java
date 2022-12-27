@@ -5,7 +5,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -166,7 +165,7 @@ public class Controller {
 
         calc.setCriterionWeightVectors(criterionWeights.weightVector());
 
-        Label vector = new Label();
+        Text vector = new Text();
         SimpleMatrix weightVector = calc.calculate();
         vector.setText("Weight vector: "+ Arrays.toString(weightVector.getDDRM().getData()));
 
@@ -183,13 +182,14 @@ public class Controller {
         ranking.setText(text.toString());
         ranking.setFont(Font.font("Verdana",20));
 
-        Label[] inconsistencyLabels = new Label[criterions.length];
+        Text inconsistencyLabels = new Text();
+        StringBuilder inconsistency = new StringBuilder();
         for (int i=0; i<criterions.length; i++)
-            inconsistencyLabels[i] = new Label("Criterion \""+criterions[i].getCriterionName()+"\" inconsistency: "+criterions[i].inconsistencyIndex());
+            inconsistency.append("Criterion \""+criterions[i].getCriterionName()+"\" inconsistency: "+criterions[i].inconsistencyIndex()+"\n");
 
-        mainBox.getChildren().addAll(ranking, vector);
-        for (Label label: inconsistencyLabels)
-            mainBox.getChildren().add(label);
+        inconsistencyLabels.setText(inconsistency.toString());
+        mainBox.getChildren().addAll(ranking, inconsistencyLabels);
+
     }
 
     public VBox getMainBox(){ return mainBox; }
