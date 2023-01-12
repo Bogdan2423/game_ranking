@@ -12,7 +12,6 @@ public class CriterionTest {
         c1.setComparison(2, 0, 5);
         c1.setComparison(2, 1, 1.0/3);
 
-        System.out.println(c1.matrix);
         Double[] expectedVector = {0.072, 0.649, 0.279};
 
         double[] actualVector = c1.weightVector().getDDRM().getData();

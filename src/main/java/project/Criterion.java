@@ -8,12 +8,14 @@ import org.ejml.simple.SimpleMatrix;
 public class Criterion {
     String criterionName;
     SimpleMatrix matrix;
+    private int size;
 
     public Criterion(String name){
         this.criterionName = name;
     }
 
     public void createMatrix(int size){
+        this.size = size;
         matrix = new SimpleMatrix(size, size);
         for (int i = 0; i<size; i++)
             matrix.set(i, i, 1);
@@ -40,6 +42,21 @@ public class Criterion {
             eigenVector.set(i, eigenVector.get(i)/sum);
 
         return eigenVector;
+    }
+
+    public SimpleMatrix gmmWeightVector(){
+        SimpleMatrix weightVector = new SimpleMatrix(size, 1);
+        double currProduct;
+        for (int i = 0; i<size; i++){
+            currProduct = 1;
+            for (int j = 0; j<size; j++)
+                currProduct*=matrix.get(i, j);
+            weightVector.set(i, Math.pow(currProduct, 1.0/size));
+        }
+        double sum = weightVector.elementSum();
+        for (int i = 0; i<size; i++)
+            weightVector.set(i, weightVector.get(i)/sum);
+        return weightVector;
     }
 
     public double inconsistencyIndex(){
