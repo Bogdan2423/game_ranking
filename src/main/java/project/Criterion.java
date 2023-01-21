@@ -59,6 +59,26 @@ public class Criterion {
         return weightVector;
     }
 
+    public SimpleMatrix sscsmWeightVector() {
+        SimpleMatrix weightVector = new SimpleMatrix(size, 1);
+        double[] columnSums = new double[size];
+        for (int j = 0; j < size; j++) {
+            columnSums[j] = 0;
+            for (int k = 0; k < size; k++) {
+                columnSums[j] += matrix.get(k, j);
+            }
+        }
+
+        for (int i = 0; i < size; i++) {
+            weightVector.set(i, 0);
+            for (int j = 0; j < size; j++) {
+                weightVector.set(i, weightVector.get(i) + (matrix.get(i, j) / columnSums[j]));
+            }
+        }
+
+        return weightVector;
+    }
+
     public double inconsistencyIndex(){
         double maxIndex=0;
         double currIndex;

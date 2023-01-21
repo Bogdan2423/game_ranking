@@ -22,6 +22,34 @@ public class CriterionTest {
     }
 
     @Test
+    public void gmmWeightVectorTest(){
+        Criterion c = new Criterion("test");
+        c.createMatrix(5);
+
+        c.setComparison(1, 0, 1.0/4);
+        c.setComparison(2, 0, 3.0/5);
+        c.setComparison(3, 0, 7.0/6);
+        c.setComparison(4, 0, 1.0/2);
+
+        c.setComparison(2, 1, 5.0/6);
+        c.setComparison(3, 1, 9.0/5);
+        c.setComparison(4, 1, 5.0/3);
+
+        c.setComparison(3, 2, 3.0);
+        c.setComparison(4, 2, 2.0);
+
+        c.setComparison(4, 3, 9.0/4);
+
+        Double[] expectedVector = {0.3015, 0.1169, 0.1127, 0.2276, 0.2413};
+
+        double[] actualVector = c.weightVector().getDDRM().getData();
+
+        for (int i = 0; i<5; i++) {
+            assertEquals(expectedVector[i], actualVector[i], 0.01);
+        }
+    }
+
+    @Test
     public void inconsistencyTest(){
         Criterion c = new Criterion("test");
 

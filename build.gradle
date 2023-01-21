@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group 'org.example'
@@ -22,10 +23,20 @@ dependencies {
     implementation group: 'org.ejml', name: 'ejml-all', version: '0.41'
 }
 
+
 test {
     useJUnitPlatform()
 }
 
 application {
     mainClassName = 'project.Main'
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+
 }

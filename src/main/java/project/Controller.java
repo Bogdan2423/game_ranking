@@ -26,6 +26,7 @@ public class Controller {
     private String[] criterionsStrings;
     private int numExperts;
     private boolean gmmMethod;
+    private boolean sscsmMethod;
 
     private VBox mainBox= new VBox();
 
@@ -81,7 +82,8 @@ public class Controller {
         ObservableList<String> options =
                 FXCollections.observableArrayList(
                         "EVM",
-                        "GMM"
+                        "GMM",
+                        "SSCSM"
                 );
         ComboBox method = new ComboBox(options);
 
@@ -90,10 +92,10 @@ public class Controller {
         mainBox.getChildren().clear();
         mainBox.getChildren().addAll(numLabel, numField, methodLabel, method, nextButton);
         nextButton.setOnAction((event1 -> {
-            if (method.getValue().toString()=="EVM")
-                gmmMethod = false;
-            else
+            if (method.getValue().toString()=="GMM")
                 gmmMethod = true;
+            else if (method.getValue().toString()=="SSCSM")
+                sscsmMethod = true;
 
             numExperts = Integer.parseInt(numField.getText());
 
@@ -230,6 +232,8 @@ public class Controller {
             for (Criterion crit : criterions[i]) {
                 if (gmmMethod)
                     calc[i].addWeightVector(crit.gmmWeightVector());
+                else if(sscsmMethod)
+                    calc[i].addWeightVector(crit.sscsmWeightVector());
                 else
                     calc[i].addWeightVector(crit.weightVector());
             }
